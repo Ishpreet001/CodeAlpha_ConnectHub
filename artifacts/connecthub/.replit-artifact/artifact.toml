@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "ConnectHub"
+description = "A full-stack social media platform for sharing posts, discovering people, following creators, and staying connected through a polished responsive experience."
+version = "1.0.0"
+id = "artifacts/connecthub"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24819
+
+[services.development]
+run = "pnpm --filter @workspace/connecthub run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/connecthub", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/connecthub/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24819"
+BASE_PATH = "/"
